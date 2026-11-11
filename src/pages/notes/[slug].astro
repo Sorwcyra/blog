@@ -1,0 +1,24 @@
+---
+import Article from '../../layouts/Article.astro';
+import { getNotes } from '../../lib/posts';
+
+export function getStaticPaths() {
+  return getNotes().map((n) => ({ params: { slug: n.slug } }));
+}
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const note = getNotes().find((n) => n.slug === Astro.params.slug);
+const Content = note.Content;
+---
+<Article
+  title={note.title}
+  date={note.date}
+  tags={note.tags}
+  summary={note.summary}
+  backHref={`${base}/notes/`}
+  backLabel="全部笔记"
+  kind="note"
+  origin={note.origin}
+>
+  <Content />
+</Article>

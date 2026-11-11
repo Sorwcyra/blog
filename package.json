@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "astro dev --host 127.0.0.1",
     "build": "astro build",
-    "preview": "astro preview --host 127.0.0.1"
+    "preview": "astro preview --host 127.0.0.1",
+    "notes": "node scripts/sync-notes.mjs",
+    "notes:check": "node scripts/sync-notes.mjs --check",
+    "publish:notes": "node scripts/sync-notes.mjs && astro build && git add -A && git commit -m \"notes: 同步 Obsidian 笔记\" && git push"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.12",

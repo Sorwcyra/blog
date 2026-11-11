@@ -1,0 +1,115 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getNotes, groupByTag } from '../../lib/posts';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const notes = getNotes();
+const allGroups = groupByTag(notes);
+// 只把出现两次以上的标签放出来当筛选器，长尾标签留在每篇下面
+const tagGroups = allGroups.filter(([, items]) => items.length >= 2);
+---
+<Base title="学习笔记 · sorwcyra" description="汪晨阳的学习笔记：LLM、后端、Go、Python、Docker 与工程实践">
+  <section class="intro">
+    <a class="back" href={`${base}/`}>← 回文章列表</a>
+    <h1>学习笔记</h1>
+    <p>
+      平时在 Obsidian 里记的东西，按主题整理后同步到这里。从语法速查到项目实战，
+      不保证每篇都打磨过，但都是自己跑过一遍的。
+    </p>
+    <p class="stat">{notes.length} 篇 · {allGroups.length} 个标签</p>
+  </section>
+
+  <div class="filters" id="filters">
+    <button class="chip on" data-tag="all">全部</button>
+    {tagGroups.map(([tag, items]) => (
+      <button class="chip" data-tag={tag}>{tag}<i>{items.length}</i></button>
+    ))}
+  </div>
+
+  <ul class="list" id="list">
+    {notes.map((n) => (
+      <li data-tags={n.tags.join(',')}>
+        <a class="item" href={`${base}/notes/${n.slug}/`}>
+          <div class="row">
+            <h2>{n.title}</h2>
+            <time>{n.date}</time>
+          </div>
+          <p>{n.summary}</p>
+          <div class="tags">
+            {n.tags.map((t) => <span>{t}</span>)}
+          </div>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <p class="empty" id="empty" hidden>这个主题下还没有笔记。</p>
+</Base>
+
+<script>
+  const filters = document.getElementById('filters');
+  const list = document.getElementById('list');
+  const empty = document.getElementById('empty');
+  const items = [...list.querySelectorAll('li')];
+
+  filters?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.chip');
+    if (!btn) return;
+    filters.querySelectorAll('.chip').forEach((c) => c.classList.toggle('on', c === btn));
+    const tag = btn.dataset.tag;
+    let shown = 0;
+    for (const li of items) {
+      const hit = tag === 'all' || li.dataset.tags.split(',').includes(tag);
+      li.hidden = !hit;
+      if (hit) shown++;
+    }
+    empty.hidden = shown > 0;
+  });
+</script>
+
+<style>
+  .intro { padding-bottom: 30px; border-bottom: 1px solid var(--border); }
+  .back { font-size: 13px; color: var(--muted); }
+  .back:hover { color: var(--text); }
+  .intro h1 {
+    font-size: clamp(28px, 4.2vw, 38px); font-weight: 600;
+    letter-spacing: -1px; line-height: 1.2; margin: 14px 0 0;
+  }
+  .intro p { margin-top: 14px; color: var(--muted); font-size: 14.6px; max-width: 560px; }
+  .intro .stat { font-size: 12.5px; color: var(--dim); margin-top: 10px; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; padding: 22px 0 8px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font: inherit; font-size: 12.5px; color: var(--muted); cursor: pointer;
+    background: transparent; border: 1px solid var(--border); border-radius: 99px;
+    padding: 5px 13px; transition: color .18s, border-color .18s, background .18s;
+  }
+  .chip:hover { color: var(--text); border-color: color-mix(in srgb, var(--text) 30%, transparent); }
+  .chip i { font-style: normal; font-size: 11px; color: var(--dim); }
+  .chip.on {
+    color: #0a0a0b; background: var(--text); border-color: var(--text);
+  }
+  .chip.on i { color: color-mix(in srgb, #0a0a0b 55%, transparent); }
+
+  .list { list-style: none; }
+  .item { display: block; padding: 22px 0; border-bottom: 1px solid var(--border); }
+  .row { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+  .item h2 { font-size: 17.5px; font-weight: 600; line-height: 1.5; transition: color .2s; }
+  .item:hover h2 { color: var(--accent); }
+  .item time { flex: none; font-size: 12px; color: var(--dim); }
+  .item p {
+    color: var(--muted); font-size: 13.6px; margin-top: 6px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tags span {
+    font-size: 11.5px; color: var(--muted); background: var(--tag-bg);
+    border-radius: 99px; padding: 2px 10px;
+  }
+  .empty { color: var(--muted); padding: 30px 0; font-size: 14px; }
+  @media (max-width: 560px) {
+    .row { flex-direction: column; gap: 4px; }
+    .item h2 { font-size: 16.5px; }
+  }
+</style>

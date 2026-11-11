@@ -1,5 +1,5 @@
 ---
-import Base from '../../layouts/Base.astro';
+import Article from '../../layouts/Article.astro';
 import { getPosts } from '../../lib/posts';
 
 export function getStaticPaths() {
@@ -10,31 +10,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const post = getPosts().find((p) => p.slug === Astro.params.slug);
 const Content = post.Content;
 ---
-<Base title={`${post.title} · sorwcyra`} description={post.summary}>
-  <article>
-    <a class="back" href={`${base}/`}>← 全部文章</a>
-    <h1>{post.title}</h1>
-    <div class="meta">
-      <time>{post.date}</time>
-      {post.tags.map((t) => <span>{t}</span>)}
-    </div>
-    <div class="prose">
-      <Content />
-    </div>
-  </article>
-</Base>
-
-<style>
-  .back { font-size: 13px; color: var(--muted); }
-  .back:hover { color: var(--text); }
-  h1 {
-    font-size: clamp(25px, 3.6vw, 34px); font-weight: 600; line-height: 1.35;
-    letter-spacing: -.5px; margin: 18px 0 12px;
-  }
-  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 38px; }
-  .meta time { font-size: 12.5px; color: var(--dim); }
-  .meta span {
-    font-size: 11.5px; color: var(--muted); background: var(--tag-bg);
-    border-radius: 99px; padding: 2px 10px;
-  }
-</style>
+<Article
+  title={post.title}
+  date={post.date}
+  tags={post.tags}
+  summary={post.summary}
+  backHref={`${base}/`}
+  backLabel="全部文章"
+>
+  <Content />
+</Article>

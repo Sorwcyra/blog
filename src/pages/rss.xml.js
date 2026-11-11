@@ -1,18 +1,23 @@
 import rss from '@astrojs/rss';
-import { getPosts } from '../lib/posts';
+import { getAll } from '../lib/posts';
 
 export async function GET(context) {
-  const posts = getPosts();
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const items = getAll()
+    .filter((x) => x.date)
+    .map((x) => ({
+      title: x.title,
+      pubDate: new Date(x.date),
+      description: x.summary,
+      link: `${base}/${x.kind === 'note' ? 'notes' : 'posts'}/${x.slug}/`,
+      categories: x.tags
+    }));
+
   return rss({
     title: 'sorwcyra blog',
-    description: '汪晨阳 sorwcyra 的技术博客：RAG、Agent 与后端工程',
+    description: '汪晨阳 sorwcyra 的技术博客：RAG、Agent、后端工程与学习笔记',
     site: context.site,
-    items: posts.map((p) => ({
-      title: p.title,
-      pubDate: new Date(p.date),
-      description: p.summary,
-      link: `${base}/posts/${p.slug}/`
-    }))
+    items,
+    customData: '<language>zh-cn</language>'
   });
 }
