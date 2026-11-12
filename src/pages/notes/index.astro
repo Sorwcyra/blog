@@ -88,9 +88,9 @@ const tagGroups = allGroups.filter(([, items]) => items.length >= 2);
   .chip:hover { color: var(--text); border-color: color-mix(in srgb, var(--text) 30%, transparent); }
   .chip i { font-style: normal; font-size: 11px; color: var(--dim); }
   .chip.on {
-    color: #0a0a0b; background: var(--text); border-color: var(--text);
+    color: var(--bg); background: var(--text); border-color: var(--text);
   }
-  .chip.on i { color: color-mix(in srgb, #0a0a0b 55%, transparent); }
+  .chip.on i { color: color-mix(in srgb, var(--bg) 55%, transparent); }
 
   .list { list-style: none; }
   .item { display: block; padding: 22px 0; border-bottom: 1px solid var(--border); }

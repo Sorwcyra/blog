@@ -16,6 +16,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <meta name="description" content={description ?? '汪晨阳 sorwcyra 的技术博客'} />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
   <link rel="alternate" type="application/rss+xml" title="sorwcyra blog" href={`${base}/rss.xml`} />
+  <script is:inline>
+    // 首帧前定主题，避免刷新时闪一下
+    try {
+      if (localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light');
+    } catch (e) {}
+  </script>
   <style is:global>
     :root {
       --bg: #0a0a0b;
@@ -26,6 +32,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       --dim: #6b7078;
       --accent: #85b7eb;
       --tag-bg: #22262b;
+      --prose: #dfe2e6;
+      --prose-soft: #cfd3d8;
+      --code-bg: #101215;
+      color-scheme: dark;
+    }
+    /* 白天主题：同一套变量换值，组件样式不用改 */
+    html.light {
+      --bg: #fbfbfa;
+      --surface: #f2f3f5;
+      --border: rgba(0, 0, 0, 0.12);
+      --text: #16191d;
+      --muted: #5b6169;
+      --dim: #8a9099;
+      --accent: #2b6cb0;
+      --tag-bg: #eceef1;
+      --prose: #31363c;
+      --prose-soft: #3d4349;
+      --code-bg: #f5f6f8;
+      color-scheme: light;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -33,6 +58,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
       background: var(--bg); color: var(--text); line-height: 1.78;
       -webkit-font-smoothing: antialiased;
+      transition: background .22s ease, color .22s ease;
     }
     a { color: inherit; text-decoration: none; }
     .wrap { max-width: 720px; margin: 0 auto; padding: 0 26px; }
@@ -48,6 +74,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .logo span { color: var(--accent); }
     .hd nav { display: flex; align-items: center; gap: 18px; font-size: 13.5px; color: var(--muted); }
     .hd nav a:hover { color: var(--text); }
+    .theme {
+      width: 30px; height: 30px; flex: none; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      font: inherit; font-size: 14px; line-height: 1; color: var(--muted);
+      background: transparent; border: 1px solid var(--border); border-radius: 50%;
+      transition: color .18s, border-color .18s, transform .3s;
+    }
+    .theme:hover {
+      color: var(--text); border-color: color-mix(in srgb, var(--text) 32%, transparent);
+      transform: rotate(-18deg);
+    }
 
     main { padding: 58px 0 90px; }
     footer {
@@ -56,7 +93,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
 
     /* 文章正文 */
-    .prose { font-size: 15.6px; line-height: 1.95; color: #dfe2e6; }
+    .prose { font-size: 15.6px; line-height: 1.95; color: var(--prose); }
     .prose > * + * { margin-top: 1.15em; }
     .prose h2 {
       font-size: 21px; font-weight: 600; color: var(--text);
@@ -64,12 +101,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     .prose h3 { font-size: 17px; font-weight: 600; color: var(--text); margin-top: 1.7em; }
     .prose h4 { font-size: 15.6px; font-weight: 600; color: var(--text); margin-top: 1.55em; }
-    .prose h5 { font-size: 14.6px; font-weight: 600; color: #c3c8cf; margin-top: 1.4em; }
-    .prose p { color: #cfd3d8; }
+    .prose h5 { font-size: 14.6px; font-weight: 600; color: var(--prose-soft); margin-top: 1.4em; }
+    .prose p { color: var(--prose-soft); }
     .prose strong { color: var(--text); font-weight: 600; }
     .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
     .prose ul, .prose ol { padding-left: 1.35em; }
-    .prose li { margin: 0.35em 0; color: #cfd3d8; }
+    .prose li { margin: 0.35em 0; color: var(--prose-soft); }
     .prose blockquote {
       border-left: 2px solid var(--accent); padding: 2px 0 2px 16px; color: var(--muted);
     }
@@ -79,10 +116,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-size: 0.88em;
     }
     .prose pre {
-      background: #101215 !important; border: 1px solid var(--border);
+      background: var(--code-bg) !important; border: 1px solid var(--border);
       border-radius: 12px; padding: 16px 18px; overflow-x: auto; font-size: 13px; line-height: 1.7;
     }
     .prose pre code { background: none; padding: 0; font-size: inherit; }
+    /* 代码高亮：Shiki 双主题（github-light / github-dark-dimmed），按当前主题取色 */
+    .prose pre code span { color: var(--shiki-dark); }
+    html.light .prose pre code span { color: var(--shiki-light); }
     .prose table { display: table; width: 100%; border-collapse: collapse; font-size: 13.8px; }
     .prose th, .prose td {
       border: 1px solid var(--border); padding: 7px 12px; text-align: left;
@@ -109,6 +149,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <a href="https://sorwcyra.github.io/">主页</a>
         <a href="https://github.com/Sorwcyra" target="_blank" rel="noopener">GitHub</a>
         <a href={`${base}/rss.xml`}>RSS</a>
+        <button class="theme" id="themeBtn" type="button" title="切换深浅色" aria-label="切换深浅色">☾</button>
       </nav>
     </div>
   </header>
@@ -120,5 +161,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <footer class="wrap">
     © {new Date().getFullYear()} 汪晨阳 sorwcyra · Astro 构建，部署在 GitHub Pages
   </footer>
+
+  <script is:inline>
+    (() => {
+      const btn = document.getElementById('themeBtn');
+      const root = document.documentElement;
+      const paint = () => {
+        if (!btn) return;
+        const light = root.classList.contains('light');
+        btn.textContent = light ? '☾' : '☀';   // 图标表示「点一下会切到哪」
+        btn.title = light ? '切换到深色' : '切换到白天主题';
+      };
+      paint();
+      btn?.addEventListener('click', () => {
+        const light = root.classList.toggle('light');
+        try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch (e) {}
+        paint();
+      });
+    })();
+  </script>
 </body>
 </html>
