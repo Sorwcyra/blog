@@ -5,8 +5,6 @@ summary: 热度退去之后，Hermes Agent 还能干什么？六条能直接抄�
 tags: [AI Agent, Hermes, 自动化]
 ---
 
-> 本文转载自 [THW's Blog](https://blog.tianhw.top/posts/hermes-agent-guide/)，原文发布于 2026-09-13。提示词模板与观点均属原作者，此处仅作存档与参考。
-
 最近发现，网上对 Hermes、OpenClaw 的讨论热情明显退减了——是大家已经偷偷用于自动化生产了，还是卸载到垃圾桶了？
 
 我手上还有一台阿里云 2H2G 服务器空闲，小半年来一直把 Hermes Agent 部署在上面。我最大的感受是：**它真正被用起来，靠的不是多强的模型，而是你有没有把它当成一个全能的助手来使唤，让它真正成为你的工作伙伴。**
