@@ -31,12 +31,19 @@ const cfg = JSON.parse(cfgRaw);
 const astroCfg = await readFile(path.join(ROOT, 'astro.config.mjs'), 'utf8');
 const BASE = (astroCfg.match(/base:\s*['"]([^'"]+)['"]/)?.[1] ?? '').replace(/\/$/, '');
 
-const NOTE_DIR = process.env.NOTE_DIR || cfg.noteDir;
+const NOTE_DIR_RAW = process.env.NOTE_DIR || cfg.noteDir;
+const NOTE_DIR = path.isAbsolute(NOTE_DIR_RAW) ? NOTE_DIR_RAW : path.join(ROOT, NOTE_DIR_RAW);
 const POSTS_DIR = path.join(ROOT, 'src', 'notes');
 const ASSETS_DIR = path.join(ROOT, 'public', 'notes-assets');
 const MANIFEST = path.join(ROOT, '.notes-manifest.json');
 
 const norm = (s) => s.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
+
+/** 去掉已有 frontmatter，返回正文（raw 笔记用） */
+function stripFrontmatter(src) {
+  const m = src.match(/^---\s*\n[\s\S]*?\n---\s*\n/);
+  return m ? src.slice(m[0].length) : src;
+}
 
 /** 剥掉整篇外包的 ```markdown / ```md 围栏 */
 function stripOuterFence(src) {
@@ -227,12 +234,17 @@ async function main() {
       continue;
     }
     let src = norm(await readFile(file, 'utf8'));
-    src = dropMetaPreamble(src);
-    src = stripOuterFence(src);
-    src = stripWikilinks(src);
-    src = fixHeadings(src, note.title);
-    src = hardBreakQuotes(src);
-    src = src.replace(/\n{4,}/g, '\n\n\n').trim();
+    if (note.raw) {
+      // GitHub 仓库就是源：正文已经处理过，只保留内容，不再二次转换
+      src = stripFrontmatter(src).replace(/\n+$/, '');
+    } else {
+      src = dropMetaPreamble(src);
+      src = stripOuterFence(src);
+      src = stripWikilinks(src);
+      src = fixHeadings(src, note.title);
+      src = hardBreakQuotes(src);
+      src = src.replace(/\n{4,}/g, '\n\n\n').trim();
+    }
 
     const date = await pickDate(note, src, file);
     const summary = note.summary || makeSummary(src);
@@ -246,7 +258,7 @@ async function main() {
       `date: ${date}`,
       `summary: ${yamlStr(summary)}`,
       `tags: [${tags.map(yamlStr).join(', ')}]`,
-      `origin: ${yamlStr(note.file)}`,
+      `origin: ${yamlStr(note.origin || note.file)}`,
       '---',
       ''
     ].join('\n');

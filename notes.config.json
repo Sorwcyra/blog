@@ -1,125 +1,245 @@
 {
   "_comment": "笔记同步清单。想新增一篇：在 Obsidian 里写好 md，往下面的 notes 数组里加一条，然后跑 npm run notes。file 是 note 仓库里的文件名，slug 是网址路径（英文小写，别重复）。",
-  "noteDir": "C:/Users/19112/Desktop/note",
+  "noteDir": "notes-src",
   "notes": [
     {
-      "file": "法律模型微调全流程.md",
+      "file": "law-llm-lora-finetune.md",
       "slug": "law-llm-lora-finetune",
       "title": "法律领域模型微调全流程：Qwen2.5-7B + 两阶段 LoRA",
       "summary": "从数据集选型、环境排障到两阶段 LoRA 训练、验证合并与魔搭上传，完整记录法智云专用模型的落地过程。",
-      "tags": ["LLM", "LoRA", "微调", "实战"]
+      "tags": [
+        "LLM",
+        "LoRA",
+        "微调",
+        "实战"
+      ],
+      "date": "2026-10-20",
+      "raw": true,
+      "origin": "法律模型微调全流程.md"
     },
     {
-      "file": "Langchain 学习.md",
+      "file": "langchain-core.md",
       "slug": "langchain-core",
       "title": "LangChain 核心组件拆解：Model I/O、Chains、RAG、Agents",
       "summary": "把 LangChain 的四块核心能力拆开看：提示模板与输出解析、链式编排、检索增强、以及 Agent 的工具调度。",
-      "tags": ["LangChain", "LLM", "Agent"]
+      "tags": [
+        "LangChain",
+        "LLM",
+        "Agent"
+      ],
+      "date": "2026-05-21",
+      "raw": true,
+      "origin": "Langchain 学习.md"
     },
     {
-      "file": "langchain4J.md",
+      "file": "langchain4j.md",
       "slug": "langchain4j",
       "title": "LangChain4j 学习笔记：在 Java 里接大模型",
       "summary": "Java 侧接入 LLM 的一套完整笔记，涵盖模型接入、Prompt 模板、记忆、RAG 检索与 Agent 编排。",
-      "tags": ["Java", "LangChain4j", "LLM"]
+      "tags": [
+        "Java",
+        "LangChain4j",
+        "LLM"
+      ],
+      "date": "2026-05-29",
+      "raw": true,
+      "origin": "langchain4J.md"
     },
     {
-      "file": "Dify Docker部署.md",
+      "file": "dify-docker-deploy.md",
       "slug": "dify-docker-deploy",
       "title": "Dify 私有化部署：Docker Compose 全流程",
       "summary": "从系统要求、环境变量到容器编排与模型接入，一步步把 Dify 部署到自己的服务器上。",
-      "tags": ["Dify", "Docker", "部署"]
+      "tags": [
+        "Dify",
+        "Docker",
+        "部署"
+      ],
+      "date": "2026-10-19",
+      "raw": true,
+      "origin": "Dify Docker部署.md"
     },
     {
-      "file": "Docker 基础篇笔记.md",
+      "file": "docker-basics.md",
       "slug": "docker-basics",
       "title": "Docker 基础：镜像、容器与数据卷",
       "summary": "容器与虚拟化的区别、镜像分层、容器生命周期、数据卷与网络，把 Docker 的地基打牢。",
-      "tags": ["Docker", "容器", "基础"]
+      "tags": [
+        "Docker",
+        "容器",
+        "基础"
+      ],
+      "date": "2026-06-15",
+      "raw": true,
+      "origin": "Docker 基础篇笔记.md"
     },
     {
-      "file": "Docker部署.md",
+      "file": "docker-deploy-practice.md",
       "slug": "docker-deploy-practice",
       "title": "Docker 部署实操：从虚拟化到跑起一个服务",
       "summary": "以实际部署为主线，记录镜像构建、端口映射、常用命令与踩坑截图。",
-      "tags": ["Docker", "部署", "实操"]
+      "tags": [
+        "Docker",
+        "部署",
+        "实操"
+      ],
+      "date": "2026-05-19",
+      "raw": true,
+      "origin": "Docker部署.md"
     },
     {
-      "file": "MySQL Docker部署.md",
+      "file": "mysql-docker.md",
       "slug": "mysql-docker",
       "title": "用 Docker 跑 MySQL：最小可用配置",
       "summary": "一条命令拉起 MySQL 容器，含端口映射、数据持久化与初始密码设置。",
-      "tags": ["Docker", "MySQL", "数据库"]
+      "tags": [
+        "Docker",
+        "MySQL",
+        "数据库"
+      ],
+      "date": "2026-05-19",
+      "raw": true,
+      "origin": "MySQL Docker部署.md"
     },
     {
-      "file": "MongoDB Docker部署.md",
+      "file": "mongodb-docker.md",
       "slug": "mongodb-docker",
       "title": "用 Docker 跑 MongoDB：带身份认证",
       "summary": "MongoDB 容器的启动参数、账号初始化与数据卷挂载，直接可复用。",
-      "tags": ["Docker", "MongoDB", "数据库"]
+      "tags": [
+        "Docker",
+        "MongoDB",
+        "数据库"
+      ],
+      "date": "2026-05-19",
+      "raw": true,
+      "origin": "MongoDB Docker部署.md"
     },
     {
-      "file": "Flask 笔记.md",
+      "file": "flask-full-course.md",
       "slug": "flask-full-course",
       "title": "Flask 全流程笔记：从环境到部署",
       "summary": "1200 行的 Flask 系统笔记，覆盖路由、模板、请求上下文、数据库、蓝图与项目结构。",
-      "tags": ["Python", "Flask", "Web"]
+      "tags": [
+        "Python",
+        "Flask",
+        "Web"
+      ],
+      "date": "2026-05-28",
+      "raw": true,
+      "origin": "Flask 笔记.md"
     },
     {
-      "file": "Spider 爬虫笔记.md",
+      "file": "python-spider-notes.md",
       "slug": "python-spider-notes",
       "title": "Python 爬虫笔记：请求、解析与反爬",
       "summary": "从 urllib 到 requests，从 XPath、JSONPath 到 BeautifulSoup，再到代理池与 Cookie 登录的完整实践。",
-      "tags": ["Python", "爬虫", "数据采集"]
+      "tags": [
+        "Python",
+        "爬虫",
+        "数据采集"
+      ],
+      "date": "2026-05-25",
+      "raw": true,
+      "origin": "Spider 爬虫笔记.md"
     },
     {
-      "file": "Golang 基础语法笔记.md",
+      "file": "golang-basics.md",
       "slug": "golang-basics",
       "title": "Go 基础语法笔记：从 Hello World 到接口",
       "summary": "变量、切片、map、结构体、方法与接口，配合可运行的最小示例过一遍 Go 的语法骨架。",
-      "tags": ["Go", "语法", "基础"]
+      "tags": [
+        "Go",
+        "语法",
+        "基础"
+      ],
+      "date": "2026-06-16",
+      "raw": true,
+      "origin": "Golang 基础语法笔记.md"
     },
     {
-      "file": "Golang 进阶知识笔记.md",
+      "file": "golang-advanced.md",
       "slug": "golang-advanced",
       "title": "Go 进阶：泛型、并发与内存模型",
       "summary": "泛型约束、goroutine 与 channel 的调度、sync 包、context 取消传播，以及常见并发陷阱。",
-      "tags": ["Go", "并发", "进阶"]
+      "tags": [
+        "Go",
+        "并发",
+        "进阶"
+      ],
+      "date": "2026-06-16",
+      "raw": true,
+      "origin": "Golang 进阶知识笔记.md"
     },
     {
-      "file": "Go 1.22+ 新特性与工程实践.md",
+      "file": "go-122-plus.md",
       "slug": "go-122-plus",
       "title": "Go 1.22+ 新特性与工程实践",
       "summary": "循环变量语义修复、range over int、内置 min/max、增强的 HTTP 路由，以及这些改动在工程里的实际影响。",
-      "tags": ["Go", "版本特性", "工程实践"]
+      "tags": [
+        "Go",
+        "版本特性",
+        "工程实践"
+      ],
+      "date": "2026-06-16",
+      "raw": true,
+      "origin": "Go 1.22+ 新特性与工程实践.md"
     },
     {
-      "file": "Gin 框架学习笔记.md",
+      "file": "gin-framework.md",
       "slug": "gin-framework",
       "title": "Gin 框架笔记：路由、中间件与参数绑定",
       "summary": "Gin 的路由树、分组、中间件链、参数校验与统一响应封装，一套能直接抄进项目的结构。",
-      "tags": ["Go", "Gin", "Web"]
+      "tags": [
+        "Go",
+        "Gin",
+        "Web"
+      ],
+      "date": "2026-06-16",
+      "raw": true,
+      "origin": "Gin 框架学习笔记.md"
     },
     {
-      "file": "Git 笔记.md",
+      "file": "git-cheatsheet.md",
       "slug": "git-cheatsheet",
       "title": "Git 操作手册：从初始化到回滚",
       "summary": "日常真正会用到的那些命令，按场景归好类：配置、分支、撤销、冲突处理与远程协作。",
-      "tags": ["Git", "工具", "速查"]
+      "tags": [
+        "Git",
+        "工具",
+        "速查"
+      ],
+      "date": "2026-05-30",
+      "raw": true,
+      "origin": "Git 笔记.md"
     },
     {
-      "file": "ngrok内网穿透.md",
+      "file": "ngrok-tunnel.md",
       "slug": "ngrok-tunnel",
       "title": "ngrok 内网穿透：把本地服务暴露到公网",
       "summary": "临时演示、前后端联调、答辩展示的常用手段，含免费版的限制与常见故障排查。",
-      "tags": ["工具", "内网穿透", "调试"]
+      "tags": [
+        "工具",
+        "内网穿透",
+        "调试"
+      ],
+      "date": "2026-05-26",
+      "raw": true,
+      "origin": "ngrok内网穿透.md"
     },
     {
-      "file": "conda操作.md",
+      "file": "conda-cheatsheet.md",
       "slug": "conda-cheatsheet",
       "title": "conda 常用操作速查",
       "summary": "环境创建、激活、导出与清理，Python 多版本管理最常用的那十条命令。",
-      "tags": ["Python", "环境", "速查"]
+      "tags": [
+        "Python",
+        "环境",
+        "速查"
+      ],
+      "date": "2026-06-07",
+      "raw": true,
+      "origin": "conda操作.md"
     }
   ]
 }
